@@ -1,0 +1,62 @@
+#include <iostream>
+#include <list>
+#include <unordered_map>
+using namespace std;
+template<typename T> 
+
+// without weight
+// class Graph {
+// public:
+//   unordered_map<int, list<int>> m;
+//   void addEdge(int u, int v, bool direction) {
+//     m[u].push_back(v);
+//     if (direction == 0) {
+//       m[v].push_back(u);
+//     }
+//   }
+
+//   void addprintEdge() {
+//     for (auto i : m) {
+//       cout << i.first << "->";
+//       for (auto neighbour : i.second) {
+//         cout << neighbour << ",";
+//       }
+//       cout << endl;
+//     }
+//   }
+// };
+
+
+// generic graph
+
+class Graph {
+public:
+  unordered_map<T, list<T>> m;
+  void addEdge(T u, T v, bool direction) {
+    m[u].push_back(v);
+    if (direction == 0) {
+      m[v].push_back(u);
+    }
+  }
+
+  void addprintEdge() {
+    for (auto i : m) {
+      cout << i.first << "->";
+      for (auto neighbour : i.second) {
+        cout << neighbour<<",";
+      }
+      cout << endl;
+    }
+  }
+};
+
+
+int main() {
+
+  Graph<char> g;
+  g.addEdge('a','b',0);
+  g.addEdge('c', 'b', 0);
+  g.addEdge('d','a', 0);
+  cout << endl;
+  g.addprintEdge();
+}
