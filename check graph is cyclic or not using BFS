@@ -1,0 +1,27 @@
+ bool isCyclicBfs(int src, unordered_map<int, bool> &visited) {
+
+    queue<int> q;
+    unordered_map<int, bool> parent;
+    q.push(src);
+    parent[src] = -1;
+    visited[src] = true;
+    while (!q.empty()) {
+
+      int frontNode = q.front();
+      q.pop();
+      for (auto nbr : adjacencyList[frontNode]) {
+        // if the nbr is not visited
+        if (!visited[nbr]) {
+          q.push(nbr);
+          visited[nbr] = true;
+          parent[nbr] = frontNode;
+        }
+
+        // if nbr is visited and not parent
+        if (visited[nbr] && parent[frontNode] != nbr) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
