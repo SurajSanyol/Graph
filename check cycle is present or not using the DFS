@@ -1,0 +1,14 @@
+ // using dfs
+  bool isCyclicDfs(int src, unordered_map<int, bool> &visited, int parent) {
+    visited[src] = true;
+    for (auto nbr : adjacencyList[src]) {
+      if (!visited[src]) {
+        bool checkAageKaAns = isCyclicDfs(nbr, visited, src);
+        if (checkAageKaAns)
+          return true;
+      }
+      if (visited[nbr] && nbr != parent)
+        return true;
+    }
+    return false;
+  }
