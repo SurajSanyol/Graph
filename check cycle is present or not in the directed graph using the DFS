@@ -1,0 +1,16 @@
+bool isCyclicDfsDirected(int src, unordered_map<int, bool> &visited,unordered_map<int, bool> &dfsVisited){
+     visited[src]=true;
+     dfsVisited[src]=true;
+
+    for(auto nbr :adjacencyList[src])
+    {
+        if(!visited[nbr]){
+           bool ans = isCyclicDfsDirected(nbr,visited,dfsVisited);
+           if(ans) return true;
+        }
+        if(visited[nbr] && dfsVisited[nbr]) return true;
+    }
+    dfsVisited[src]=false;
+    return false;
+  
+  }
