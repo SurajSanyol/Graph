@@ -1,0 +1,12 @@
+ void topologicalSort(int src, unordered_map<int, bool> &visited,
+                       stack<int> &ans) {
+    visited[src] = true;
+
+    for (auto nbr : adjacencyList[src]) {
+      if (!visited[nbr]) {
+        topologicalSort(nbr, visited, ans);
+      }
+    }
+    // backtracking ke time stack me node o push ker denge
+    ans.push(src);
+  }
