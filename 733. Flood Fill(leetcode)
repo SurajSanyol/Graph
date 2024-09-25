@@ -1,0 +1,35 @@
+class Solution {
+    
+    void dfs( int x, int y, int newColor,int oldColor,vector<vector<int>>&ans,map<pair<int,int>,bool>&vis)
+    {
+        vis[{x,y}]= true;
+        ans[x][y]=newColor;
+
+        // only can move in 4 diraction
+        int dX[]={-1,0,1,0};
+        int dY[]={0,1,0,-1};
+
+        for(int i =0;i<4;i++){
+            int newX = x+dX[i];
+            int newY = y+dY[i];
+            if(!vis[{newX,newY}] && newX >=0 && newX <ans.size() && newY >=0 && newY < ans[0].size() && ans[newX][newY]==oldColor){
+                dfs(newX,newY,newColor,oldColor,ans,vis);
+            }
+        }
+    }
+
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        map<pair<int,int>,bool>vis;
+        int oldColor = image[sr][sc];
+         vector<vector<int>>ans = image;
+
+        
+          // ye condition bahut hi important hai
+          if (oldColor != color) {
+            dfs(sr, sc, color, oldColor, ans, vis);
+        }
+         return ans;
+
+    }
+};
