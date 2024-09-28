@@ -1,0 +1,66 @@
+class Solution {
+
+     bool toposort( int n ,unordered_map<int,list<int>>&adjList){
+          queue<int>q;
+          vector<int>ans;
+          unordered_map<int,int>indegree;
+
+          // calculate  indegree
+
+          for(auto i : adjList){
+               for(auto nbr:i.second){
+                indegree[nbr]++;
+               }
+          }
+
+          // put allnodes inside the queue which has indegree zero
+            
+            for(int i = 0;i<n;i++){
+                 if(indegree[i]==0){
+                    q.push(i);
+                 }
+            }
+
+            while(!q.empty()){
+                int fNode= q.front();
+                q.pop();
+                ans.push_back(fNode);
+
+                // decrease the degree of adjacent of fNode
+
+                for(auto nbr:adjList[fNode]){
+                    indegree[nbr]--;
+                    // check again for zero
+                     if(indegree[nbr]==0){
+                        q.push(nbr);
+                     }
+                }
+            }
+
+            if(ans.size()==n){
+                return true;
+            }
+            else {
+                return false;
+            }
+
+     }
+      
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        
+        // firstly make the adjlist
+         unordered_map<int,list<int>>adjList;
+
+          for(auto task:prerequisites){
+             int u = task[0];
+             int v = task[1];
+
+             adjList[v].push_back(u);
+          }
+         
+        bool ans =  toposort(numCourses,adjList);
+
+        return ans;
+    }
+};
