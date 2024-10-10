@@ -1,0 +1,46 @@
+class Solution {
+      bool cycledetection(vector<vector<int>>& graph,int src,  unordered_map<int,bool>&visited,  unordered_map<int,bool>&dfsVisited, vector<int>&safenode){
+
+       visited[src]=true;
+       dfsVisited[src]=true;
+          
+          for( auto nbr : graph[src]){
+             if(!visited[nbr]){
+                bool ans =  cycledetection(graph,nbr,visited,dfsVisited,safenode);
+                if(ans){
+                    return true;
+                }
+             }
+
+             if(visited[nbr] &&  dfsVisited[nbr]){
+                return true;
+             }
+          }
+
+           dfsVisited[src]= false;
+           safenode[src]=1;
+           return false;
+
+      }
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n  = graph.size();
+        vector<int>ans;
+        unordered_map<int,bool>visited,dfsVisited;
+
+        vector<int>safenode(n,0);
+        for(int i = 0;i<n;i++){
+            if(!visited[i]){
+                cycledetection(graph,i,visited,dfsVisited,safenode);
+            }
+        }
+
+        for(int i =0;i<n;i++){
+            if(safenode[i]){
+                ans.push_back(i);
+            }
+        }
+
+        return ans;
+    }
+};
